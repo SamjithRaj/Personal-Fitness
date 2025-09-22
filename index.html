@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toji Protocol Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F1113; /* Toji Black */
+            color: #D1D5DB; /* Off-White Text */
+        }
+        .tab-button {
+            transition: background-color 0.2s, color 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-button.active {
+            background-color: #1a1e22;
+            color: #FFFFFF;
+            border-bottom: 2px solid #526655; /* Toji Green */
+        }
+        .tab-button:not(.active):hover {
+            background-color: #1a1e22;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #374151;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #1F2937;
+            font-weight: 600;
+            color: #F9FAFB;
+        }
+        tr:nth-child(even) {
+            background-color: #1F2937;
+        }
+        .accent-border {
+            border-left: 4px solid #526655; /* Toji Green */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 lg:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">OPERATIONAL DIRECTIVE</h1>
+            <p class="text-gray-400 mt-2">Discipline. Efficiency. Results. Execute the plan.</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <div class="mb-8 border-b border-gray-700">
+            <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
+                <button class="tab-button active text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="overview">
+                    Macrocycle
+                </button>
+                <button class="tab-button text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="workouts">
+                    Phase 1: Workouts
+                </button>
+                <button class="tab-button text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="nutrition">
+                    Phase 1: Nutrition
+                </button>
+                <button class="tab-button text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="recovery">
+                    Recovery & KPIs
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <main>
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active space-y-6">
+                <h2 class="text-2xl font-semibold text-white accent-border pl-4">24-Week Strategic Plan</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-white">Phase 1 (Weeks 1-4): Structural Adaptation</h3>
+                        <p class="text-gray-300 mt-2">Objective: Re-establish training consistency, improve neuromuscular control, and strengthen knee stability. A moderate caloric deficit will begin the fat loss process without impeding recovery.</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-white">Phase 2 (Weeks 5-12): Hypertrophy & Work Capacity</h3>
+                        <p class="text-gray-300 mt-2">Objective: Maximize muscle growth and increase conditioning. Volume and intensity will increase systematically. Caloric intake will adjust based on progress.</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-white">Phase 3 (Weeks 13-20): Strength Intensification</h3>
+                        <p class="text-gray-300 mt-2">Objective: Increase maximal strength on key lifts while continuing to reduce body fat. Training will focus on heavy compounds and metabolic conditioning.</p>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-white">Phase 4 (Weeks 21-24): Peaking & Hardening</h3>
+                        <p class="text-gray-300 mt-2">Objective: Achieve peak physical condition. A final, aggressive push to strip remaining body fat and reveal dense, functional muscle.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workouts Tab -->
+            <div id="workouts" class="tab-content">
+                <h2 class="text-2xl font-semibold text-white accent-border pl-4 mb-6">Phase 1: Complete Training Protocol</h2>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th>Day</th>
+                                <th>Exercise / Focus</th>
+                                <th>Sets x Reps</th>
+                                <th>Tempo / Duration</th>
+                                <th>Rest</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Monday -->
+                            <tr class="bg-gray-900"><td colspan="5" class="font-bold text-lg">Monday: Upper Body (Strength)</td></tr>
+                            <tr><td></td><td>Weighted Pull-ups / Lat Pulldowns</td><td>4 x 5-8</td><td>2-0-1-1</td><td>90s</td></tr>
+                            <tr><td></td><td>Incline Dumbbell Bench Press</td><td>4 x 6-10</td><td>3-0-1-0</td><td>90s</td></tr>
+                            <tr><td></td><td>Seated Cable Row</td><td>3 x 10-12</td><td>2-1-1-1</td><td>60s</td></tr>
+                            <tr><td></td><td>Seated Dumbbell Shoulder Press</td><td>3 x 10-12</td><td>3-0-1-0</td><td>60s</td></tr>
+                            <tr><td></td><td>Face Pulls</td><td>3 x 15-20</td><td>Controlled</td><td>45s</td></tr>
+                            <tr><td></td><td>Cable Tricep Pushdowns</td><td>3 x 12-15</td><td>2-0-1-1</td><td>45s</td></tr>
+                            <!-- Tuesday -->
+                            <tr class="bg-gray-900"><td colspan="5" class="font-bold text-lg">Tuesday: Lower Body (ACL Protocol) & Core</td></tr>
+                            <tr><td></td><td>Single Leg Press</td><td>3 x 10-12 (per leg)</td><td>3-1-1-0</td><td>60s</td></tr>
+                            <tr><td></td><td>Dumbbell Romanian Deadlifts</td><td>4 x 8-10</td><td>3-0-1-0</td><td>90s</td></tr>
+                            <tr><td></td><td>Seated Hamstring Curls</td><td>3 x 12-15</td><td>2-1-1-1</td><td>60s</td></tr>
+                            <tr><td></td><td>Goblet Squats (pain-free)</td><td>3 x 10-15</td><td>3-1-1-0</td><td>60s</td></tr>
+                            <tr><td></td><td>Calf Raises</td><td>4 x 15-20</td><td>1-1-1-1</td><td>45s</td></tr>
+                            <tr><td></td><td>Hanging Leg Raises</td><td>3 x Failure</td><td>Controlled</td><td>60s</td></tr>
+                            <tr><td></td><td>Plank</td><td>3 x Max Hold</td><td>N/A</td><td>60s</td></tr>
+                            <!-- Wednesday -->
+                            <tr class="bg-gray-900"><td colspan="5" class="font-bold text-lg">Wednesday: Conditioning</td></tr>
+                            <tr><td></td><td>Boxing</td><td>N/A</td><td>60 minutes</td><td>Focus on technique</td></tr>
+                            <!-- Thursday -->
+                            <tr class="bg-gray-900"><td colspan="5" class="font-bold text-lg">Thursday: Upper Body (Hypertrophy)</td></tr>
+                            <tr><td></td><td>Flat Dumbbell Bench Press</td><td>3 x 10-12</td><td>3-0-1-0</td><td>75s</td></tr>
+                            <tr><td></td><td>Barbell Rows</td><td>3 x 8-12</td><td>2-0-1-1</td><td>75s</td></tr>
+                            <tr><td></td><td>Seated Dumbbell Lateral Raises</td><td>3 x 12-15</td><td>2-0-1-1</td><td>60s</td></tr>
+                            <tr><td></td><td>Underhand Grip Lat Pulldowns</td><td>3 x 10-12</td><td>3-0-1-1</td><td>60s</td></tr>
+                            <tr><td></td><td>EZ-Bar Skull Crushers</td><td>3 x 12-15</td><td>3-0-1-0</td><td>45s</td></tr>
+                            <tr><td></td><td>Incline Dumbbell Curls</td><td>3 x 12-15</td><td>3-0-1-1</td><td>45s</td></tr>
+                            <!-- Friday -->
+                            <tr class="bg-gray-900"><td colspan="5" class="font-bold text-lg">Friday: Full Body / Conditioning & Core</td></tr>
+                            <tr><td></td><td>Kettlebell Swings (Russian)</td><td>5 x 15</td><td>Explosive</td><td>60s</td></tr>
+                            <tr><td></td><td>Farmer's Walk</td><td>3 x Max Distance/45s</td><td>N/A</td><td>90s</td></tr>
+                            <tr><td></td><td>Battle Ropes / Rower Sprints</td><td>10 rounds: 30s on, 30s off</td><td>Max Effort</td><td>30s</td></tr>
+                            <tr><td></td><td>Cable Crunches</td><td>3 x 15-20</td><td>Controlled</td><td>60s</td></tr>
+                            <tr><td></td><td>Ab Rollouts</td><td>3 x 10-15</td><td>Controlled</td><td>60s</td></tr>
+                            <!-- Saturday -->
+                            <tr class="bg-gray-900"><td colspan="5" class="font-bold text-lg">Saturday: Conditioning</td></tr>
+                            <tr><td></td><td>Boxing</td><td>N/A</td><td>60 minutes</td><td>Apply skills under fatigue</td></tr>
+                            <!-- Sunday -->
+                            <tr class="bg-gray-900"><td colspan="5" class="font-bold text-lg">Sunday: Complete Rest</td></tr>
+                            <tr><td></td><td>Mandatory Recovery</td><td>N/A</td><td>All Day</td><td>Focus on sleep & nutrition</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Nutrition Tab -->
+            <div id="nutrition" class="tab-content">
+                <h2 class="text-2xl font-semibold text-white accent-border pl-4 mb-6">Phase 1: Nutrition Protocol (No Supplements)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-white">Daily Targets</h3>
+                        <ul class="list-disc list-inside mt-2 text-gray-300 space-y-1">
+                            <li><span class="font-semibold">Calories:</span> 2600 kcal</li>
+                            <li><span class="font-semibold">Protein:</span> 145g</li>
+                            <li><span class="font-semibold">Carbohydrates:</span> 345g</li>
+                            <li><span class="font-semibold">Fat:</span> 70g</li>
+                            <li><span class="font-semibold">Hydration:</span> 3-4 Liters Minimum</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-white">Adjustment Rule</h3>
+                        <p class="text-gray-300 mt-2">Weigh yourself daily. After 2 weeks, average the weight. If you have not lost 0.5-1 kg, reduce daily calories by 200, primarily from carbohydrates. Recalculate every 2 weeks.</p>
+                    </div>
+                </div>
+                <div class="mt-8">
+                     <h3 class="font-bold text-xl text-white mb-4">Example Meal Plans (South Indian Budget)</h3>
+                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Non-Veg Day -->
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <h4 class="font-semibold text-lg">Non-Vegetarian Day</h4>
+                            <ul class="mt-2 text-gray-300 space-y-2">
+                                <li><strong>Meal 1 (Pre-Workout):</strong> 2-3 boiled eggs, 1 banana.</li>
+                                <li><strong>Meal 2 (Post-Workout):</strong> 1 bowl curd (yogurt) with peanuts, side of roasted chana.</li>
+                                <li><strong>Meal 3 (Lunch):</strong> Large portion of dal (lentils) and vegetable curry, generous portion of rice.</li>
+                                <li><strong>Meal 4 (Afternoon):</strong> 4-5 boiled egg whites, 2 yolks.</li>
+                                <li><strong>Meal 5 (Dinner - Meat Meal):</strong> 150g chicken/fish/mutton curry, 2 rotis or rice, salad.</li>
+                            </ul>
+                        </div>
+                        <!-- Veg Day -->
+                        <div class="bg-gray-800 p-6 rounded-lg">
+                            <h4 class="font-semibold text-lg">Vegetarian Day (Tuesday / Friday)</h4>
+                            <ul class="mt-2 text-gray-300 space-y-2">
+                                <li><strong>Meal 1 (Pre-Workout):</strong> Small bowl of sprouts salad or upma, 1 banana.</li>
+                                <li><strong>Meal 2 (Post-Workout):</strong> 200ml milk, handful of roasted chana (chickpeas).</li>
+                                <li><strong>Meal 3 (Lunch):</strong> Soya chunk or paneer curry, rice, large portion of dal (lentils).</li>
+                                <li><strong>Meal 4 (Afternoon):</strong> 4-5 boiled egg whites, 2 yolks.</li>
+                                <li><strong>Meal 5 (Dinner):</strong> Rajma (kidney beans) or chana masala, rice or rotis, side of vegetables.</li>
+                            </ul>
+                        </div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- Recovery Tab -->
+            <div id="recovery" class="tab-content">
+                <h2 class="text-2xl font-semibold text-white accent-border pl-4 mb-6">Recovery & Weekly KPIs</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-white">Recovery Protocols</h3>
+                        <ul class="list-disc list-inside mt-2 text-gray-300 space-y-2">
+                            <li><span class="font-semibold">Sleep:</span> 7-9 hours. Non-negotiable.</li>
+                            <li><span class="font-semibold">Mobility:</span> Perform prescribed cool-downs daily. Foam roll major muscle groups on rest days for 10 minutes.</li>
+                             <li><span class="font-semibold">Breathing:</span> Before each session, perform 3 rounds of Box Breathing (4 sec inhale, 4 hold, 4 exhale, 4 hold).</li>
+                            <li><span class="font-semibold">ACL Safety:</span> If you feel sharp pain in your knee, stop the exercise immediately. Do not lift with your ego. Form is paramount.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-800 p-6 rounded-lg">
+                        <h3 class="font-bold text-lg text-white">Weekly Checkpoints (KPIs)</h3>
+                         <p class="text-gray-400 mb-2">Log these every Sunday morning before eating or drinking.</p>
+                        <ol class="list-decimal list-inside mt-2 text-gray-300 space-y-2">
+                            <li><span class="font-semibold">Bodyweight:</span> Log in kg.</li>
+                            <li><span class="font-semibold">Waist Measurement:</span> Measure at the navel, log in cm.</li>
+                            <li><span class="font-semibold">Performance KPI:</span> Max reps of Bodyweight Pull-ups.</li>
+                            <li><span class="font-semibold">Progress Photos:</span> Front, back, and side. Same lighting and position each week.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Deactivate all
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Activate clicked
+                    button.classList.add('active');
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
