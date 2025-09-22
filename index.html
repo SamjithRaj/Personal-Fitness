@@ -7,49 +7,126 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --toji-black: #0F1113;
+            --toji-green: #526655;
+            --off-white: #D1D5DB;
+            --light-gray: #374151;
+            --medium-gray: #1F2937;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0F1113; /* Toji Black */
-            color: #D1D5DB; /* Off-White Text */
+            background-color: var(--toji-black);
+            color: var(--off-white);
         }
+
         .tab-button {
-            transition: background-color 0.2s, color 0.2s;
-            border-bottom: 2px solid transparent;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            border-bottom: 3px solid transparent;
         }
+
         .tab-button.active {
-            background-color: #1a1e22;
             color: #FFFFFF;
-            border-bottom: 2px solid #526655; /* Toji Green */
+            border-bottom-color: var(--toji-green);
         }
+
         .tab-button:not(.active):hover {
-            background-color: #1a1e22;
+            background-color: var(--medium-gray);
+            border-bottom-color: var(--light-gray);
         }
-        .tab-content {
-            display: none;
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .tab-content.active {
-            display: block;
-        }
+
         table {
             border-collapse: collapse;
             width: 100%;
         }
+
         th, td {
-            border: 1px solid #374151;
+            border: 1px solid var(--light-gray);
             padding: 12px;
             text-align: left;
         }
+
         th {
-            background-color: #1F2937;
+            background-color: var(--medium-gray);
             font-weight: 600;
             color: #F9FAFB;
         }
-        tr:nth-child(even) {
-            background-color: #1F2937;
+
+        tr:nth-child(even) { background-color: var(--medium-gray); }
+
+        .accent-border { border-left: 4px solid var(--toji-green); }
+
+        .card {
+            background-color: var(--medium-gray);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--light-gray);
+            transition: box-shadow 0.3s, transform 0.3s;
         }
-        .accent-border {
-            border-left: 4px solid #526655; /* Toji Green */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1);
         }
+
+        /* Checklist Styles */
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0.5rem;
+            background-color: #2c323d;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+        }
+        .checklist-item.completed {
+            background-color: var(--toji-green);
+            color: var(--toji-black);
+        }
+        .checklist-item.completed label {
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+        .checklist-item input[type="checkbox"] {
+            display: none;
+        }
+        .checklist-item .checkbox-custom {
+            width: 1.5rem;
+            height: 1.5rem;
+            min-width: 1.5rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 0.25rem;
+            margin-right: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .checklist-item.completed .checkbox-custom {
+            background-color: var(--off-white);
+            border-color: var(--off-white);
+        }
+        .checkbox-custom svg {
+            width: 1rem;
+            height: 1rem;
+            stroke: var(--toji-black);
+            stroke-width: 3;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .checklist-item.completed .checkbox-custom svg {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body class="p-4 sm:p-6 lg:p-8">
@@ -63,14 +140,17 @@
         <!-- Tab Navigation -->
         <div class="mb-8 border-b border-gray-700">
             <nav class="flex flex-wrap -mb-px" aria-label="Tabs">
-                <button class="tab-button active text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="overview">
+                <button class="tab-button active text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="mission">
+                    Daily Mission
+                </button>
+                <button class="tab-button text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="overview">
                     Macrocycle
                 </button>
                 <button class="tab-button text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="workouts">
-                    Phase 1: Workouts
+                    Workouts
                 </button>
                 <button class="tab-button text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="nutrition">
-                    Phase 1: Nutrition
+                    Nutrition
                 </button>
                 <button class="tab-button text-sm sm:text-base font-medium text-center py-4 px-6 rounded-t-lg" data-tab="recovery">
                     Recovery & KPIs
@@ -80,23 +160,31 @@
 
         <!-- Tab Content -->
         <main>
+             <!-- Daily Mission Tab -->
+             <div id="mission" class="tab-content active space-y-6">
+                <h2 id="mission-header" class="text-2xl font-semibold text-white accent-border pl-4">Today's Directives</h2>
+                <div id="mission-checklist" class="space-y-3">
+                    <!-- Checklist items will be injected here by JS -->
+                </div>
+            </div>
+
             <!-- Overview Tab -->
-            <div id="overview" class="tab-content active space-y-6">
+            <div id="overview" class="tab-content space-y-6">
                 <h2 class="text-2xl font-semibold text-white accent-border pl-4">24-Week Strategic Plan</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="card">
                         <h3 class="font-bold text-lg text-white">Phase 1 (Weeks 1-4): Structural Adaptation</h3>
                         <p class="text-gray-300 mt-2">Objective: Re-establish training consistency, improve neuromuscular control, and strengthen knee stability. A moderate caloric deficit will begin the fat loss process without impeding recovery.</p>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="card">
                         <h3 class="font-bold text-lg text-white">Phase 2 (Weeks 5-12): Hypertrophy & Work Capacity</h3>
                         <p class="text-gray-300 mt-2">Objective: Maximize muscle growth and increase conditioning. Volume and intensity will increase systematically. Caloric intake will adjust based on progress.</p>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="card">
                         <h3 class="font-bold text-lg text-white">Phase 3 (Weeks 13-20): Strength Intensification</h3>
                         <p class="text-gray-300 mt-2">Objective: Increase maximal strength on key lifts while continuing to reduce body fat. Training will focus on heavy compounds and metabolic conditioning.</p>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="card">
                         <h3 class="font-bold text-lg text-white">Phase 4 (Weeks 21-24): Peaking & Hardening</h3>
                         <p class="text-gray-300 mt-2">Objective: Achieve peak physical condition. A final, aggressive push to strip remaining body fat and reveal dense, functional muscle.</p>
                     </div>
@@ -108,7 +196,7 @@
                 <h2 class="text-2xl font-semibold text-white accent-border pl-4 mb-6">Phase 1: Complete Training Protocol</h2>
                 <div class="overflow-x-auto">
                     <table>
-                        <thead class="bg-gray-700">
+                        <thead>
                             <tr>
                                 <th>Day</th>
                                 <th>Exercise / Focus</th>
@@ -168,7 +256,7 @@
             <div id="nutrition" class="tab-content">
                 <h2 class="text-2xl font-semibold text-white accent-border pl-4 mb-6">Phase 1: Nutrition Protocol (No Supplements)</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="card">
                         <h3 class="font-bold text-lg text-white">Daily Targets</h3>
                         <ul class="list-disc list-inside mt-2 text-gray-300 space-y-1">
                             <li><span class="font-semibold">Calories:</span> 2600 kcal</li>
@@ -178,7 +266,7 @@
                             <li><span class="font-semibold">Hydration:</span> 3-4 Liters Minimum</li>
                         </ul>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="card">
                         <h3 class="font-bold text-lg text-white">Adjustment Rule</h3>
                         <p class="text-gray-300 mt-2">Weigh yourself daily. After 2 weeks, average the weight. If you have not lost 0.5-1 kg, reduce daily calories by 200, primarily from carbohydrates. Recalculate every 2 weeks.</p>
                     </div>
@@ -186,8 +274,7 @@
                 <div class="mt-8">
                      <h3 class="font-bold text-xl text-white mb-4">Example Meal Plans (South Indian Budget)</h3>
                      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <!-- Non-Veg Day -->
-                        <div class="bg-gray-800 p-6 rounded-lg">
+                        <div class="card">
                             <h4 class="font-semibold text-lg">Non-Vegetarian Day</h4>
                             <ul class="mt-2 text-gray-300 space-y-2">
                                 <li><strong>Meal 1 (Pre-Workout):</strong> 2-3 boiled eggs, 1 banana.</li>
@@ -197,8 +284,7 @@
                                 <li><strong>Meal 5 (Dinner - Meat Meal):</strong> 150g chicken/fish/mutton curry, 2 rotis or rice, salad.</li>
                             </ul>
                         </div>
-                        <!-- Veg Day -->
-                        <div class="bg-gray-800 p-6 rounded-lg">
+                        <div class="card">
                             <h4 class="font-semibold text-lg">Vegetarian Day (Tuesday / Friday)</h4>
                             <ul class="mt-2 text-gray-300 space-y-2">
                                 <li><strong>Meal 1 (Pre-Workout):</strong> Small bowl of sprouts salad or upma, 1 banana.</li>
@@ -216,7 +302,7 @@
             <div id="recovery" class="tab-content">
                 <h2 class="text-2xl font-semibold text-white accent-border pl-4 mb-6">Recovery & Weekly KPIs</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="card">
                         <h3 class="font-bold text-lg text-white">Recovery Protocols</h3>
                         <ul class="list-disc list-inside mt-2 text-gray-300 space-y-2">
                             <li><span class="font-semibold">Sleep:</span> 7-9 hours. Non-negotiable.</li>
@@ -225,7 +311,7 @@
                             <li><span class="font-semibold">ACL Safety:</span> If you feel sharp pain in your knee, stop the exercise immediately. Do not lift with your ego. Form is paramount.</li>
                         </ul>
                     </div>
-                    <div class="bg-gray-800 p-6 rounded-lg">
+                    <div class="card">
                         <h3 class="font-bold text-lg text-white">Weekly Checkpoints (KPIs)</h3>
                          <p class="text-gray-400 mb-2">Log these every Sunday morning before eating or drinking.</p>
                         <ol class="list-decimal list-inside mt-2 text-gray-300 space-y-2">
@@ -237,31 +323,84 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // --- TAB NAVIGATION ---
             const tabButtons = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
 
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Deactivate all
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     tabContents.forEach(content => content.classList.remove('active'));
-
-                    // Activate clicked
                     button.classList.add('active');
-                    const tabId = button.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.add('active');
+                    document.getElementById(button.dataset.tab).classList.add('active');
                 });
+            });
+
+            // --- DAILY MISSION CHECKLIST ---
+            const missions = {
+                0: { day: "Sunday", title: "Complete Rest & Recovery", tasks: [
+                    { id: "sun1", text: "Achieve 7-9 hours of sleep" }, { id: "sun2", text: "Perform 10 minutes of mobility/foam rolling" },
+                    { id: "sun3", text: "Prepare nutrition for the week" }, { id: "sun4", text: "Log weekly KPIs (Weight, Waist, Pull-ups, Photos)" } ]},
+                1: { day: "Monday", title: "Upper Body (Strength)", tasks: [
+                    { id: "mon1", text: "Execute Upper Body (Strength) workout" }, { id: "mon2", text: "Consume 2600 kcal with 145g protein" },
+                    { id: "mon3", text: "Perform pre-session Box Breathing" }, { id: "mon4", text: "Hydrate: 3-4 liters of water" }, { id: "mon5", text: "Achieve 7-9 hours of sleep" } ]},
+                2: { day: "Tuesday", title: "Lower Body (ACL Protocol)", tasks: [
+                    { id: "tue1", text: "Execute Lower Body & Core workout" }, { id: "tue2", text: "Consume 2600 kcal with 145g protein" },
+                    { id: "tue3", text: "Perform pre-session Box Breathing" }, { id: "tue4", text: "Hydrate: 3-4 liters of water" }, { id: "tue5", text: "Achieve 7-9 hours of sleep" } ]},
+                3: { day: "Wednesday", title: "Conditioning", tasks: [
+                    { id: "wed1", text: "Complete 60 minutes of Boxing" }, { id: "wed2", text: "Focus on technique and footwork" },
+                    { id: "wed3", text: "Consume 2600 kcal with 145g protein" }, { id: "wed4", text: "Hydrate: 3-4 liters of water" }, { id: "wed5", text: "Achieve 7-9 hours of sleep" } ]},
+                4: { day: "Thursday", title: "Upper Body (Hypertrophy)", tasks: [
+                    { id: "thu1", text: "Execute Upper Body (Hypertrophy) workout" }, { id: "thu2", text: "Consume 2600 kcal with 145g protein" },
+                    { id: "thu3", text: "Perform pre-session Box Breathing" }, { id: "thu4", text: "Hydrate: 3-4 liters of water" }, { id: "thu5", text: "Achieve 7-9 hours of sleep" } ]},
+                5: { day: "Friday", title: "Full Body / Conditioning", tasks: [
+                    { id: "fri1", text: "Execute Full Body / Conditioning & Core workout" }, { id: "fri2", text: "Consume 2600 kcal with 145g protein" },
+                    { id: "fri3", text: "Perform pre-session Box Breathing" }, { id: "fri4", text: "Hydrate: 3-4 liters of water" }, { id: "fri5", text: "Achieve 7-9 hours of sleep" } ]},
+                6: { day: "Saturday", title: "Conditioning", tasks: [
+                    { id: "sat1", text: "Complete 60 minutes of Boxing" }, { id: "sat2", text: "Apply skills under fatigue" },
+                    { id: "sat3", text: "Consume 2600 kcal with 145g protein" }, { id: "sat4", text: "Hydrate: 3-4 liters of water" }, { id: "sat5", text: "Achieve 7-9 hours of sleep" } ]}
+            };
+
+            const today = new Date();
+            const dayIndex = today.getDay();
+            const missionData = missions[dayIndex];
+            const missionHeader = document.getElementById('mission-header');
+            const missionChecklist = document.getElementById('mission-checklist');
+            
+            missionHeader.textContent = `${missionData.day}: ${missionData.title}`;
+
+            const todayKey = `checklist_${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+            let completedTasks = JSON.parse(localStorage.getItem(todayKey)) || {};
+
+            missionData.tasks.forEach(task => {
+                const isCompleted = completedTasks[task.id] || false;
+                const item = document.createElement('div');
+                item.className = `checklist-item ${isCompleted ? 'completed' : ''}`;
+                item.innerHTML = `
+                    <div class="checkbox-custom">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                    </div>
+                    <label class="flex-grow cursor-pointer">${task.text}</label>
+                `;
+                
+                item.addEventListener('click', () => {
+                    item.classList.toggle('completed');
+                    completedTasks[task.id] = item.classList.contains('completed');
+                    localStorage.setItem(todayKey, JSON.stringify(completedTasks));
+                });
+
+                missionChecklist.appendChild(item);
             });
         });
     </script>
 
 </body>
 </html>
-
 
